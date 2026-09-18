@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudyRouteImport } from './routes/study'
 import { Route as SubjectsRouteImport } from './routes/subjects'
 import { Route as StudyIndexRouteImport } from './routes/study.index'
+import { Route as StudyModuleIdRouteImport } from './routes/study.$moduleId'
 import { Route as SubjectsIndexRouteImport } from './routes/subjects.index'
 import { Route as SubjectsSubjectIdRouteImport } from './routes/subjects.$subjectId'
 
@@ -36,6 +37,11 @@ const StudyIndexRoute = StudyIndexRouteImport.update({
   path: '/',
   getParentRoute: () => StudyRoute,
 } as any)
+const StudyModuleIdRoute = StudyModuleIdRouteImport.update({
+  id: '/$moduleId',
+  path: '/$moduleId',
+  getParentRoute: () => StudyRoute,
+} as any)
 const SubjectsIndexRoute = SubjectsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -51,12 +57,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/study': typeof StudyRouteWithChildren
   '/subjects': typeof SubjectsRouteWithChildren
+  '/study/$moduleId': typeof StudyModuleIdRoute
   '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
   '/study/': typeof StudyIndexRoute
   '/subjects/': typeof SubjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/study/$moduleId': typeof StudyModuleIdRoute
   '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
   '/study': typeof StudyIndexRoute
   '/subjects': typeof SubjectsIndexRoute
@@ -66,6 +74,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/study': typeof StudyRouteWithChildren
   '/subjects': typeof SubjectsRouteWithChildren
+  '/study/$moduleId': typeof StudyModuleIdRoute
   '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
   '/study/': typeof StudyIndexRoute
   '/subjects/': typeof SubjectsIndexRoute
@@ -76,16 +85,18 @@ export interface FileRouteTypes {
     | '/'
     | '/study'
     | '/subjects'
+    | '/study/$moduleId'
     | '/subjects/$subjectId'
     | '/study/'
     | '/subjects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/subjects/$subjectId' | '/study' | '/subjects'
+  to: '/' | '/study/$moduleId' | '/subjects/$subjectId' | '/study' | '/subjects'
   id:
     | '__root__'
     | '/'
     | '/study'
     | '/subjects'
+    | '/study/$moduleId'
     | '/subjects/$subjectId'
     | '/study/'
     | '/subjects/'
@@ -127,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudyIndexRouteImport
       parentRoute: typeof StudyRoute
     }
+    '/study/$moduleId': {
+      id: '/study/$moduleId'
+      path: '/$moduleId'
+      fullPath: '/study/$moduleId'
+      preLoaderRoute: typeof StudyModuleIdRouteImport
+      parentRoute: typeof StudyRoute
+    }
     '/subjects/': {
       id: '/subjects/'
       path: '/'
@@ -145,10 +163,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface StudyRouteChildren {
+  StudyModuleIdRoute: typeof StudyModuleIdRoute
   StudyIndexRoute: typeof StudyIndexRoute
 }
 
 const StudyRouteChildren: StudyRouteChildren = {
+  StudyModuleIdRoute: StudyModuleIdRoute,
   StudyIndexRoute: StudyIndexRoute,
 }
 

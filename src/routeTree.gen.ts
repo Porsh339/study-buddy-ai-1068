@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as StudyRouteImport } from './routes/study'
 import { Route as SubjectsRouteImport } from './routes/subjects'
 import { Route as StudyIndexRouteImport } from './routes/study.index'
@@ -20,6 +21,11 @@ import { Route as SubjectsSubjectIdRouteImport } from './routes/subjects.$subjec
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StudyRoute = StudyRouteImport.update({
@@ -55,6 +61,7 @@ const SubjectsSubjectIdRoute = SubjectsSubjectIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/quiz': typeof QuizRoute
   '/study': typeof StudyRouteWithChildren
   '/subjects': typeof SubjectsRouteWithChildren
   '/study/$moduleId': typeof StudyModuleIdRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/quiz': typeof QuizRoute
   '/study/$moduleId': typeof StudyModuleIdRoute
   '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
   '/study': typeof StudyIndexRoute
@@ -72,6 +80,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/quiz': typeof QuizRoute
   '/study': typeof StudyRouteWithChildren
   '/subjects': typeof SubjectsRouteWithChildren
   '/study/$moduleId': typeof StudyModuleIdRoute
@@ -83,6 +92,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/quiz'
     | '/study'
     | '/subjects'
     | '/study/$moduleId'
@@ -90,10 +100,17 @@ export interface FileRouteTypes {
     | '/study/'
     | '/subjects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/study/$moduleId' | '/subjects/$subjectId' | '/study' | '/subjects'
+  to:
+    | '/'
+    | '/quiz'
+    | '/study/$moduleId'
+    | '/subjects/$subjectId'
+    | '/study'
+    | '/subjects'
   id:
     | '__root__'
     | '/'
+    | '/quiz'
     | '/study'
     | '/subjects'
     | '/study/$moduleId'
@@ -104,6 +121,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  QuizRoute: typeof QuizRoute
   StudyRoute: typeof StudyRouteWithChildren
   SubjectsRoute: typeof SubjectsRouteWithChildren
 }
@@ -115,6 +133,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/study': {
@@ -190,6 +215,7 @@ const SubjectsRouteWithChildren = SubjectsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  QuizRoute: QuizRoute,
   StudyRoute: StudyRouteWithChildren,
   SubjectsRoute: SubjectsRouteWithChildren,
 }

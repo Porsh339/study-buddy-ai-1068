@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SubjectsRouteImport } from './routes/subjects'
 import { Route as SubjectsIndexRouteImport } from './routes/subjects.index'
+import { Route as SubjectsSubjectIdRouteImport } from './routes/subjects.$subjectId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,28 +29,36 @@ const SubjectsIndexRoute = SubjectsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => SubjectsRoute,
 } as any)
+const SubjectsSubjectIdRoute = SubjectsSubjectIdRouteImport.update({
+  id: '/$subjectId',
+  path: '/$subjectId',
+  getParentRoute: () => SubjectsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/subjects': typeof SubjectsRouteWithChildren
+  '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
   '/subjects/': typeof SubjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
   '/subjects': typeof SubjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/subjects': typeof SubjectsRouteWithChildren
+  '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
   '/subjects/': typeof SubjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/subjects' | '/subjects/'
+  fullPaths: '/' | '/subjects' | '/subjects/$subjectId' | '/subjects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/subjects'
-  id: '__root__' | '/' | '/subjects' | '/subjects/'
+  to: '/' | '/subjects/$subjectId' | '/subjects'
+  id: '__root__' | '/' | '/subjects' | '/subjects/$subjectId' | '/subjects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -80,14 +89,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SubjectsIndexRouteImport
       parentRoute: typeof SubjectsRoute
     }
+    '/subjects/$subjectId': {
+      id: '/subjects/$subjectId'
+      path: '/$subjectId'
+      fullPath: '/subjects/$subjectId'
+      preLoaderRoute: typeof SubjectsSubjectIdRouteImport
+      parentRoute: typeof SubjectsRoute
+    }
   }
 }
 
 interface SubjectsRouteChildren {
+  SubjectsSubjectIdRoute: typeof SubjectsSubjectIdRoute
   SubjectsIndexRoute: typeof SubjectsIndexRoute
 }
 
 const SubjectsRouteChildren: SubjectsRouteChildren = {
+  SubjectsSubjectIdRoute: SubjectsSubjectIdRoute,
   SubjectsIndexRoute: SubjectsIndexRoute,
 }
 

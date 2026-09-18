@@ -154,3 +154,37 @@
     color: var(--color-foreground);
   }
 }
+
+@theme inline {
+  --color-success: var(--success);
+}
+
+@utility glass {
+  background-color: color-mix(in oklab, var(--card) 62%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 14px 34px -20px color-mix(in oklab, var(--primary) 50%, transparent);
+  border: 1px solid color-mix(in oklab, white 70%, transparent);
+}
+
+@utility glass-soft {
+  background-color: color-mix(in oklab, var(--card) 50%, transparent);
+  backdrop-filter: blur(14px) saturate(130%);
+  border: 1px solid color-mix(in oklab, white 65%, transparent);
+}
+
+@keyframes blobA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(24px, -18px) scale(1.08); }
+}
+@keyframes blobB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 22px) scale(1.12); }
+}
+@keyframes blobC {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(16px, 14px) scale(0.94); }
+}
+
+.blob-a { animation: blobA 11s ease-in-out infinite; }
+.blob-b { animation: blobB 13s ease-in-out infinite; }
+.blob-c { animation: blobC 15s ease-in-out infinite; }

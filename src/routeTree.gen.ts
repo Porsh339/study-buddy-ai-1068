@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SubjectsRouteImport } from './routes/subjects'
+import { Route as SubjectsIndexRouteImport } from './routes/subjects.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,38 @@ const SubjectsRoute = SubjectsRouteImport.update({
   path: '/subjects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SubjectsIndexRoute = SubjectsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SubjectsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/subjects': typeof SubjectsRoute
+  '/subjects': typeof SubjectsRouteWithChildren
+  '/subjects/': typeof SubjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/subjects': typeof SubjectsRoute
+  '/subjects': typeof SubjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/subjects': typeof SubjectsRoute
+  '/subjects': typeof SubjectsRouteWithChildren
+  '/subjects/': typeof SubjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/subjects'
+  fullPaths: '/' | '/subjects' | '/subjects/'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/subjects'
-  id: '__root__' | '/' | '/subjects'
+  id: '__root__' | '/' | '/subjects' | '/subjects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SubjectsRoute: typeof SubjectsRoute
+  SubjectsRoute: typeof SubjectsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +73,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SubjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/subjects/': {
+      id: '/subjects/'
+      path: '/'
+      fullPath: '/subjects/'
+      preLoaderRoute: typeof SubjectsIndexRouteImport
+      parentRoute: typeof SubjectsRoute
+    }
   }
 }
 
+interface SubjectsRouteChildren {
+  SubjectsIndexRoute: typeof SubjectsIndexRoute
+}
+
+const SubjectsRouteChildren: SubjectsRouteChildren = {
+  SubjectsIndexRoute: SubjectsIndexRoute,
+}
+
+const SubjectsRouteWithChildren = SubjectsRoute._addFileChildren(
+  SubjectsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SubjectsRoute: SubjectsRoute,
+  SubjectsRoute: SubjectsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

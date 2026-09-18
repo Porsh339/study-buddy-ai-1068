@@ -10,33 +10,142 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as StudyRouteImport } from './routes/study'
+import { Route as SubjectsRouteImport } from './routes/subjects'
+import { Route as QuizIndexRouteImport } from './routes/quiz.index'
+import { Route as QuizModuleIdRouteImport } from './routes/quiz.$moduleId'
+import { Route as StudyIndexRouteImport } from './routes/study.index'
+import { Route as StudyModuleIdRouteImport } from './routes/study.$moduleId'
+import { Route as SubjectsIndexRouteImport } from './routes/subjects.index'
+import { Route as SubjectsSubjectIdRouteImport } from './routes/subjects.$subjectId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudyRoute = StudyRouteImport.update({
+  id: '/study',
+  path: '/study',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubjectsRoute = SubjectsRouteImport.update({
+  id: '/subjects',
+  path: '/subjects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizIndexRoute = QuizIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => QuizRoute,
+} as any)
+const QuizModuleIdRoute = QuizModuleIdRouteImport.update({
+  id: '/$moduleId',
+  path: '/$moduleId',
+  getParentRoute: () => QuizRoute,
+} as any)
+const StudyIndexRoute = StudyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StudyRoute,
+} as any)
+const StudyModuleIdRoute = StudyModuleIdRouteImport.update({
+  id: '/$moduleId',
+  path: '/$moduleId',
+  getParentRoute: () => StudyRoute,
+} as any)
+const SubjectsIndexRoute = SubjectsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SubjectsRoute,
+} as any)
+const SubjectsSubjectIdRoute = SubjectsSubjectIdRouteImport.update({
+  id: '/$subjectId',
+  path: '/$subjectId',
+  getParentRoute: () => SubjectsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/quiz': typeof QuizRouteWithChildren
+  '/study': typeof StudyRouteWithChildren
+  '/subjects': typeof SubjectsRouteWithChildren
+  '/quiz/$moduleId': typeof QuizModuleIdRoute
+  '/study/$moduleId': typeof StudyModuleIdRoute
+  '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
+  '/quiz/': typeof QuizIndexRoute
+  '/study/': typeof StudyIndexRoute
+  '/subjects/': typeof SubjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/quiz/$moduleId': typeof QuizModuleIdRoute
+  '/study/$moduleId': typeof StudyModuleIdRoute
+  '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
+  '/quiz': typeof QuizIndexRoute
+  '/study': typeof StudyIndexRoute
+  '/subjects': typeof SubjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/quiz': typeof QuizRouteWithChildren
+  '/study': typeof StudyRouteWithChildren
+  '/subjects': typeof SubjectsRouteWithChildren
+  '/quiz/$moduleId': typeof QuizModuleIdRoute
+  '/study/$moduleId': typeof StudyModuleIdRoute
+  '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
+  '/quiz/': typeof QuizIndexRoute
+  '/study/': typeof StudyIndexRoute
+  '/subjects/': typeof SubjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/quiz'
+    | '/study'
+    | '/subjects'
+    | '/quiz/$moduleId'
+    | '/study/$moduleId'
+    | '/subjects/$subjectId'
+    | '/quiz/'
+    | '/study/'
+    | '/subjects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/quiz/$moduleId'
+    | '/study/$moduleId'
+    | '/subjects/$subjectId'
+    | '/quiz'
+    | '/study'
+    | '/subjects'
+  id:
+    | '__root__'
+    | '/'
+    | '/quiz'
+    | '/study'
+    | '/subjects'
+    | '/quiz/$moduleId'
+    | '/study/$moduleId'
+    | '/subjects/$subjectId'
+    | '/quiz/'
+    | '/study/'
+    | '/subjects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  QuizRoute: typeof QuizRouteWithChildren
+  StudyRoute: typeof StudyRouteWithChildren
+  SubjectsRoute: typeof SubjectsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +157,115 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/study': {
+      id: '/study'
+      path: '/study'
+      fullPath: '/study'
+      preLoaderRoute: typeof StudyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subjects': {
+      id: '/subjects'
+      path: '/subjects'
+      fullPath: '/subjects'
+      preLoaderRoute: typeof SubjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz/': {
+      id: '/quiz/'
+      path: '/'
+      fullPath: '/quiz/'
+      preLoaderRoute: typeof QuizIndexRouteImport
+      parentRoute: typeof QuizRoute
+    }
+    '/quiz/$moduleId': {
+      id: '/quiz/$moduleId'
+      path: '/$moduleId'
+      fullPath: '/quiz/$moduleId'
+      preLoaderRoute: typeof QuizModuleIdRouteImport
+      parentRoute: typeof QuizRoute
+    }
+    '/study/': {
+      id: '/study/'
+      path: '/'
+      fullPath: '/study/'
+      preLoaderRoute: typeof StudyIndexRouteImport
+      parentRoute: typeof StudyRoute
+    }
+    '/study/$moduleId': {
+      id: '/study/$moduleId'
+      path: '/$moduleId'
+      fullPath: '/study/$moduleId'
+      preLoaderRoute: typeof StudyModuleIdRouteImport
+      parentRoute: typeof StudyRoute
+    }
+    '/subjects/': {
+      id: '/subjects/'
+      path: '/'
+      fullPath: '/subjects/'
+      preLoaderRoute: typeof SubjectsIndexRouteImport
+      parentRoute: typeof SubjectsRoute
+    }
+    '/subjects/$subjectId': {
+      id: '/subjects/$subjectId'
+      path: '/$subjectId'
+      fullPath: '/subjects/$subjectId'
+      preLoaderRoute: typeof SubjectsSubjectIdRouteImport
+      parentRoute: typeof SubjectsRoute
+    }
   }
 }
 
+interface QuizRouteChildren {
+  QuizModuleIdRoute: typeof QuizModuleIdRoute
+  QuizIndexRoute: typeof QuizIndexRoute
+}
+
+const QuizRouteChildren: QuizRouteChildren = {
+  QuizModuleIdRoute: QuizModuleIdRoute,
+  QuizIndexRoute: QuizIndexRoute,
+}
+
+const QuizRouteWithChildren = QuizRoute._addFileChildren(QuizRouteChildren)
+
+interface StudyRouteChildren {
+  StudyModuleIdRoute: typeof StudyModuleIdRoute
+  StudyIndexRoute: typeof StudyIndexRoute
+}
+
+const StudyRouteChildren: StudyRouteChildren = {
+  StudyModuleIdRoute: StudyModuleIdRoute,
+  StudyIndexRoute: StudyIndexRoute,
+}
+
+const StudyRouteWithChildren = StudyRoute._addFileChildren(StudyRouteChildren)
+
+interface SubjectsRouteChildren {
+  SubjectsSubjectIdRoute: typeof SubjectsSubjectIdRoute
+  SubjectsIndexRoute: typeof SubjectsIndexRoute
+}
+
+const SubjectsRouteChildren: SubjectsRouteChildren = {
+  SubjectsSubjectIdRoute: SubjectsSubjectIdRoute,
+  SubjectsIndexRoute: SubjectsIndexRoute,
+}
+
+const SubjectsRouteWithChildren = SubjectsRoute._addFileChildren(
+  SubjectsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  QuizRoute: QuizRouteWithChildren,
+  StudyRoute: StudyRouteWithChildren,
+  SubjectsRoute: SubjectsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

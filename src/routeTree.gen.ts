@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as StudyRouteImport } from './routes/study'
 import { Route as SubjectsRouteImport } from './routes/subjects'
+import { Route as QuizIndexRouteImport } from './routes/quiz.index'
 import { Route as StudyIndexRouteImport } from './routes/study.index'
 import { Route as StudyModuleIdRouteImport } from './routes/study.$moduleId'
 import { Route as SubjectsIndexRouteImport } from './routes/subjects.index'
@@ -38,6 +39,11 @@ const SubjectsRoute = SubjectsRouteImport.update({
   path: '/subjects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuizIndexRoute = QuizIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => QuizRoute,
+} as any)
 const StudyIndexRoute = StudyIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,30 +67,32 @@ const SubjectsSubjectIdRoute = SubjectsSubjectIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/quiz': typeof QuizRoute
+  '/quiz': typeof QuizRouteWithChildren
   '/study': typeof StudyRouteWithChildren
   '/subjects': typeof SubjectsRouteWithChildren
   '/study/$moduleId': typeof StudyModuleIdRoute
   '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
+  '/quiz/': typeof QuizIndexRoute
   '/study/': typeof StudyIndexRoute
   '/subjects/': typeof SubjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/quiz': typeof QuizRoute
   '/study/$moduleId': typeof StudyModuleIdRoute
   '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
+  '/quiz': typeof QuizIndexRoute
   '/study': typeof StudyIndexRoute
   '/subjects': typeof SubjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/quiz': typeof QuizRoute
+  '/quiz': typeof QuizRouteWithChildren
   '/study': typeof StudyRouteWithChildren
   '/subjects': typeof SubjectsRouteWithChildren
   '/study/$moduleId': typeof StudyModuleIdRoute
   '/subjects/$subjectId': typeof SubjectsSubjectIdRoute
+  '/quiz/': typeof QuizIndexRoute
   '/study/': typeof StudyIndexRoute
   '/subjects/': typeof SubjectsIndexRoute
 }
@@ -97,14 +105,15 @@ export interface FileRouteTypes {
     | '/subjects'
     | '/study/$moduleId'
     | '/subjects/$subjectId'
+    | '/quiz/'
     | '/study/'
     | '/subjects/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/quiz'
     | '/study/$moduleId'
     | '/subjects/$subjectId'
+    | '/quiz'
     | '/study'
     | '/subjects'
   id:
@@ -115,13 +124,14 @@ export interface FileRouteTypes {
     | '/subjects'
     | '/study/$moduleId'
     | '/subjects/$subjectId'
+    | '/quiz/'
     | '/study/'
     | '/subjects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  QuizRoute: typeof QuizRoute
+  QuizRoute: typeof QuizRouteWithChildren
   StudyRoute: typeof StudyRouteWithChildren
   SubjectsRoute: typeof SubjectsRouteWithChildren
 }
@@ -156,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SubjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quiz/': {
+      id: '/quiz/'
+      path: '/'
+      fullPath: '/quiz/'
+      preLoaderRoute: typeof QuizIndexRouteImport
+      parentRoute: typeof QuizRoute
+    }
     '/study/': {
       id: '/study/'
       path: '/'
@@ -187,6 +204,16 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface QuizRouteChildren {
+  QuizIndexRoute: typeof QuizIndexRoute
+}
+
+const QuizRouteChildren: QuizRouteChildren = {
+  QuizIndexRoute: QuizIndexRoute,
+}
+
+const QuizRouteWithChildren = QuizRoute._addFileChildren(QuizRouteChildren)
+
 interface StudyRouteChildren {
   StudyModuleIdRoute: typeof StudyModuleIdRoute
   StudyIndexRoute: typeof StudyIndexRoute
@@ -215,7 +242,7 @@ const SubjectsRouteWithChildren = SubjectsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  QuizRoute: QuizRoute,
+  QuizRoute: QuizRouteWithChildren,
   StudyRoute: StudyRouteWithChildren,
   SubjectsRoute: SubjectsRouteWithChildren,
 }

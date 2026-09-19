@@ -36,7 +36,10 @@ function HomePage() {
     .slice(0, 2)
     .toUpperCase();
 
-  const recommended = modules.filter((m) => !completed.includes(m.id)).slice(0, 2);
+  const activeSubjects = subjects.filter((s) => profile.activeSubjects.includes(s.id));
+  const recommended = modules
+    .filter((m) => !completed.includes(m.id) && profile.activeSubjects.includes(m.subjectId))
+    .slice(0, 2);
 
   return (
     <AppShell>
@@ -99,7 +102,7 @@ function HomePage() {
       </section>
 
       <div className="mt-5 grid grid-cols-2 gap-3">
-        {subjects.map((s) => {
+        {activeSubjects.map((s) => {
           const p = subjectProgress(s.id);
           return (
             <Link

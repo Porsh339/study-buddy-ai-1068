@@ -1,69 +1,193 @@
 # Study Buddy Pro
 
-Build a modern, mobile-first online study app for students.
+📚 Online Study App
 
-The app should solve common student problems such as difficulty understanding long study materials, creating summaries, staying organized, and testing their knowledge.
+A modern, mobile-first learning platform designed to help students study smarter, understand difficult topics, summarize notes, and test their knowledge.
 
-Main Features
+🎯 Objective
 
-Student Dashboard: Show subjects, current modules, study progress, quiz scores, and recommended topics.
+The goal of this project is to create a simple and interactive study platform that helps students:
 
-Subjects & Modules: Students can choose subjects and study organized modules.
+- Understand difficult learning material
+- Summarize long notes
+- Get help from an AI tutor
+- Test their knowledge with quizzes
+- Track their learning progress
+- Identify topics that need more practice
 
-Study Notes: Display clear and easy-to-read learning material.
+👥 Target Users
 
-AI Summary: Allow students to turn long notes into short summaries with key points and important terms.
+The main target users are students who need support with studying, revision, and exam preparation.
 
-AI Tutor: Students can ask questions and receive simple explanations and examples.
+👤 User Roles
 
-Module Quiz: After each module, provide a short 5-question quiz with instant results and explanations.
+Student
 
-Progress Tracking: Show completed modules, quiz scores, study progress, and weak topics.
+Students can:
 
-Profile: Allow students to manage their profile, subjects, goals, and settings.
+- View subjects and learning modules
+- Read study notes
+- Generate summaries
+- Ask the AI tutor questions
+- Complete quizzes
+- View quiz results
+- Track their progress
+- Review weak topics
+- Manage their learning goals
 
-Main Navigation
+Admin
 
-Use a simple bottom navigation:
+Admins can:
+
+- Manage students
+- Manage subjects and modules
+- Manage study materials
+- Manage quizzes
+- Monitor educational content
+
+AI Tutor
+
+The AI tutor helps students by:
+
+- Explaining difficult concepts
+- Answering study questions
+- Providing examples
+- Simplifying complex topics
+- Helping students review mistakes
+
+🏗️ App Structure
+
+The application uses five main sections:
+
+Home
+├── Progress
+├── Continue Learning
+└── Recommendations
+
+Subjects
+├── Subjects
+└── Learning Modules
+
+Study
+├── Study Notes
+├── Summaries
+└── AI Tutor
+
+Quiz
+├── Module Quizzes
+├── Quiz Results
+└── Review Mistakes
+
+Profile
+├── Learning Goals
+├── Progress
+└── Settings
+
+🔄 Learning Flow
+
+Choose Subject
+      ↓
+Choose Module
+      ↓
+Study Material
+      ↓
+View Summary
+      ↓
+Ask AI Tutor
+      ↓
+Take Quiz
+      ↓
+View Results
+      ↓
+Review Weak Topics
+
+✨ Key Features
+
+📊 Student Dashboard
+
+Students can see their subjects, current modules, progress, quiz scores, and recommended topics.
+
+📖 Study Modules
+
+Learning content is organized into subjects and modules for easier studying.
+
+📝 AI Summaries
+
+Students can turn long study materials into short summaries containing important points and terms.
+
+🤖 AI Tutor
+
+Students can ask questions and receive simple explanations and examples.
+
+🧠 Module Quizzes
+
+Each module includes a short 5-question quiz with immediate results and explanations.
+
+📈 Progress Tracking
+
+Students can monitor completed modules, quiz performance, overall progress, and weak topics.
+
+👤 Student Profile
+
+Students can manage their profile, learning goals, and settings.
+
+🎨 Design
+
+The app follows a:
+
+- Mobile-first design
+- Clean and modern interface
+- Student-friendly layout
+- Simple navigation
+- Clear typography
+- Card-based UI
+- Progress indicators
+- Accessible design
+- Minimal and uncluttered experience
+
+🧭 Navigation
+
+The main navigation is:
 
 Home | Subjects | Study | Quiz | Profile
 
-Design
+🔑 Main Actions
 
-Use a clean, modern, student-friendly mobile UI with cards, progress bars, clear buttons, readable typography, and simple navigation.
+- Continue Learning
+- Start Module
+- Summarize Notes
+- Ask AI Tutor
+- Take Quiz
+- Review Mistakes
 
-Important buttons include:
+📋 Requirements
 
-Continue Learning
-Start Module
-Summarize Notes
-Ask AI Tutor
-Take Quiz
-Review Mistakes
+The application should be:
 
-The main learning flow should be:
+- Easy to use
+- Mobile responsive
+- Fast and reliable
+- Secure
+- Accessible
+- Scalable
+- Simple enough for students to navigate without training
 
-Choose Subject → Study Module → View Summary → Ask Tutor → Take Quiz → See Results → Review Weak TOPICS
+🚀 Future Improvements
 
-This project was built with [Lovable](https://lovable.dev).
+Possible future features include:
 
-**Live app**: https://study-buddy-ai-1068.lovable.app
+- Personalized study plans
+- Flashcards
+- Exam preparation mode
+- Study reminders
+- Gamification and achievements
+- Leaderboards
+- Teacher accounts
+- More advanced AI tutoring
+- Offline study mode
 
-## Build with Lovable
+📌 Project Vision
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/6b4951a5-506a-45ba-ac9e-7aa9699d5ce6).
+The vision is to create a personal study companion that combines study notes, AI tutoring, summaries, quizzes, and progress tracking in one simple application.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+«Study smarter. Understand better. Track your progress.»

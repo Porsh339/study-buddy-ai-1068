@@ -6,7 +6,7 @@ import { useProgress } from "@/lib/progress";
 import { getModule } from "@/lib/study-data";
 
 export const Route = createFileRoute("/quiz/$moduleId")({
-  validateSearch: (search: Record<string, unknown>): { review?: boolean } => ({
+  validateSearch: (search: Record<string, unknown>): { review?: boolean | undefined } => ({
     review: search["review"] === true || search["review"] === "true" ? true : undefined,
   }),
   loader: ({ params }) => {

@@ -18,7 +18,7 @@ export const Route = createFileRoute("/study/")({
 
 function StudyIndex() {
   const { lastModuleId, completed } = useProgress();
-  const current = getModule(lastModuleId ?? "") ?? modules[0];
+  const current = getModule(lastModuleId ?? "") ?? modules[0]!;
 
   return (
     <AppShell>

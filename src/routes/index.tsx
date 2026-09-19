@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const { profile, lastModuleId, completed, subjectProgress, averageScore, weakTopics } = useProgress();
-  const current = getModule(lastModuleId ?? "") ?? modules[0];
+  const current = getModule(lastModuleId ?? "") ?? modules[0]!;
   const currentSubject = getSubject(current.subjectId)!;
   const subjectModules = currentSubject.moduleIds;
   const position = subjectModules.indexOf(current.id) + 1;
@@ -36,7 +36,10 @@ function HomePage() {
     .slice(0, 2)
     .toUpperCase();
 
-  const recommended = modules.filter((m) => !completed.includes(m.id)).slice(0, 2);
+  const activeSubjects = subjects.filter((s) => profile.activeSubjects.includes(s.id));
+  const recommended = modules
+    .filter((m) => !completed.includes(m.id) && profile.activeSubjects.includes(m.subjectId))
+    .slice(0, 2);
 
   return (
     <AppShell>
@@ -99,7 +102,7 @@ function HomePage() {
       </section>
 
       <div className="mt-5 grid grid-cols-2 gap-3">
-        {subjects.map((s) => {
+        {activeSubjects.map((s) => {
           const p = subjectProgress(s.id);
           return (
             <Link
@@ -164,7 +167,7 @@ function HomePage() {
         </div>
         <div className="mt-3 flex items-center gap-2">
           <span className="min-w-0 truncate text-xs font-semibold text-muted-foreground">
-            {weakTopics.length ? `Weakest: ${weakTopics[0].topic}` : "Take a quiz to spot weak topics"}
+            {weakTopics.length ? `Weakest: ${weakTopics[0]?.topic}` : "Take a quiz to spot weak topics"}
           </span>
           <Link
             to="/quiz"

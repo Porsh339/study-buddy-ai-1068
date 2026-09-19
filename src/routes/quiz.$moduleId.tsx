@@ -6,8 +6,8 @@ import { useProgress } from "@/lib/progress";
 import { getModule } from "@/lib/study-data";
 
 export const Route = createFileRoute("/quiz/$moduleId")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    review: search.review === true || search.review === "true" ? true : undefined,
+  validateSearch: (search: Record<string, unknown>): { review?: boolean | undefined } => ({
+    review: search["review"] === true || search["review"] === "true" ? true : undefined,
   }),
   loader: ({ params }) => {
     const mod = getModule(params.moduleId);
@@ -42,7 +42,7 @@ function QuizPage() {
   const [answers, setAnswers] = useState<number[]>([]);
   const [finished, setFinished] = useState(Boolean(review && previous));
 
-  const question = mod.quiz[index];
+  const question = mod.quiz[index]!;
   const total = mod.quiz.length;
 
   function next() {

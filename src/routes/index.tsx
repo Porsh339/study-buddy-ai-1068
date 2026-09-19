@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const { profile, lastModuleId, completed, subjectProgress, averageScore, weakTopics } = useProgress();
-  const current = getModule(lastModuleId ?? "") ?? modules[0];
+  const current = getModule(lastModuleId ?? "") ?? modules[0]!;
   const currentSubject = getSubject(current.subjectId)!;
   const subjectModules = currentSubject.moduleIds;
   const position = subjectModules.indexOf(current.id) + 1;
@@ -167,7 +167,7 @@ function HomePage() {
         </div>
         <div className="mt-3 flex items-center gap-2">
           <span className="min-w-0 truncate text-xs font-semibold text-muted-foreground">
-            {weakTopics.length ? `Weakest: ${weakTopics[0].topic}` : "Take a quiz to spot weak topics"}
+            {weakTopics.length ? `Weakest: ${weakTopics[0]?.topic}` : "Take a quiz to spot weak topics"}
           </span>
           <Link
             to="/quiz"
